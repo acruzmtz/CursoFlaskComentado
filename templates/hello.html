@@ -5,6 +5,17 @@
     <title></title>
   </head>
   <body>
-    <h1>Hola mundo, tu ip es {{user_ip}}</h1>
+    {% if user_ip%}
+      <h1>Hola mundo, tu ip es {{user_ip}}</h1>
+    {% else%}
+      <a href="{{url_for('home')}}">Inicio</a>
+    {% endif%}
+
+    <ul>
+      {% for todo in todos%}
+        <li><h5>{{todo}}</h5></li>
+      {% endfor%}
+    </ul>
+
   </body>
 </html>
