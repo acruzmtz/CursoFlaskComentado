@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+
+{% block title%}
+{{ super() }} Home
+{% endblock%}
+
+{% block body%}
     {% if user_ip%}
       <h1>Hola mundo, tu ip es {{user_ip}}</h1>
     {% else%}
@@ -13,9 +14,7 @@
 
     <ul>
       {% for todo in todos%}
-        <li><h5>{{todo}}</h5></li>
+        {{ macro.render_todo(todo)}}
       {% endfor%}
     </ul>
-
-  </body>
-</html>
+{% endblock%}
