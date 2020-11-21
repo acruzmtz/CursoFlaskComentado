@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="es" dir="ltr">
-  <head>
-    <meta charset="utf-8">
+{% extends 'bootstrap/base.html'%}
+
+{% block head%}
+{{ super() }}
     <title>
       {% block title %} Break Food | {% endblock%}
     </title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
-  </head>
-  <body>
-    <header>
+{% endblock%}
+  {% block body%}
+    {% block navbar %}
       {% include 'nav.html'%}
-    </header>
-
-    {%block body%}
     {% endblock%}
-  </body>
-</html>
+
+    {%block content%} {% endblock%}
+
+  {% endblock%}

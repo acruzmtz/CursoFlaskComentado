@@ -5,7 +5,7 @@
 {{ super() }} Home
 {% endblock%}
 
-{% block body%}
+{% block content%}
     {% if user_ip%}
       <h1>Hola mundo, tu ip es {{user_ip}}</h1>
     {% else%}
