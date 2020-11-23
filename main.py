@@ -1,5 +1,9 @@
 from flask import Flask, request, make_response, redirect, render_template, session
 from flask_bootstrap import Bootstrap
+from flask_wtf import FlaskForm
+from wtforms.fields import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired
+
 
 app = Flask(__name__)
 boostrap = Bootstrap(app)
@@ -7,6 +11,12 @@ boostrap = Bootstrap(app)
 app.config["SECRET_KEY"] = "mi llave secreta"
 
 todos = ['Mandar diseños navidad', 'Cerrar trato con proveedor', 'Entregar avances Break Food']
+
+class LoginForm(FlaskForm):
+    username = StringField('Nombre de usuario: ', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Enviar')
+
 
 @app.route('/')
 def home():
@@ -20,10 +30,12 @@ def home():
 @app.route('/hello')
 def hello():
     user_ip = session.get('user_ip')
+    login = LoginForm()
 
     context = {
         'user_ip': user_ip,
-        'todos': todos
+        'todos': todos,
+        'login': login
     }
 
     #raise(Exception('500 Error'))
