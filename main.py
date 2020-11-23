@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, redirect, render_template, session, url_for
+from flask import Flask, request, make_response, redirect, render_template, session, url_for, flash
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField
@@ -51,7 +51,9 @@ def hello():
         username = login.username.data
         session['username'] = username
 
+        flash('Usuario registrado con exito')
         return redirect(url_for('home'))
+
 
     #raise(Exception('500 Error'))
     return render_template('hello.html', **context)
