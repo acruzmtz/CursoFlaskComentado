@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response, redirect, render_template, session
+from flask import Flask, request, make_response, redirect, render_template, session, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, PasswordField, SubmitField
@@ -15,6 +15,13 @@ todos = ['Mandar diseños navidad', 'Cerrar trato con proveedor', 'Entregar avan
 class LoginForm(FlaskForm):
     username = StringField('Nombre de usuario: ', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirma Password', validators=[DataRequired()])
+
+    if password == confirm_password:
+        print('son iguales')
+    else:
+        print('no lo son')
+
     submit = SubmitField('Enviar')
 
 
@@ -27,16 +34,24 @@ def home():
     return response
 
 
-@app.route('/hello')
+@app.route('/hello', methods=['GET', 'POST'])
 def hello():
     user_ip = session.get('user_ip')
     login = LoginForm()
+    username = session.get('username')
 
     context = {
         'user_ip': user_ip,
         'todos': todos,
-        'login': login
+        'login': login,
+        'username': username
     }
+
+    if login.validate_on_submit():
+        username = login.username.data
+        session['username'] = username
+
+        return redirect(url_for('home'))
 
     #raise(Exception('500 Error'))
     return render_template('hello.html', **context)
