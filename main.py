@@ -21,28 +21,17 @@ def home():
     return response
 
 
-@app.route('/hello', methods=['GET', 'POST'])
+@app.route('/hello', methods=['GET'])
 def hello():
     user_ip = session.get('user_ip')
-    login = LoginForm()
     username = session.get('username')
 
     context = {
         'user_ip': user_ip,
         'todos': todos,
-        'login': login,
         'username': username
     }
 
-    if login.validate_on_submit():
-        username = login.username.data
-        session['username'] = username
-
-        flash('Usuario registrado con exito')
-        return redirect(url_for('home'))
-
-
-    #raise(Exception('500 Error'))
     return render_template('hello.html', **context)
 
 
@@ -57,4 +46,4 @@ def internal_server_error(error):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='192.168.1.72')
