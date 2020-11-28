@@ -2,10 +2,11 @@ from flask import request, make_response, redirect, render_template, session, ur
 import unittest
 from app import create_app
 from app.forms import LoginForm
+from app.firebase_service import get_users, get_todos
 
 app = create_app()
 
-todos = ['Mandar diseños navidad', 'Cerrar trato con proveedor', 'Entregar avances Break Food']
+#todos = ['Mandar diseños navidad', 'Cerrar trato con proveedor', 'Entregar avances Break Food']
 
 @app.cli.command()
 def test():
@@ -28,9 +29,13 @@ def hello():
 
     context = {
         'user_ip': user_ip,
-        'todos': todos,
+        'todos': get_todos(username=username),
         'username': username
     }
+
+    users = get_users()
+    for user in users:
+        print(user.id)
 
     return render_template('hello.html', **context)
 
@@ -46,4 +51,4 @@ def internal_server_error(error):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='192.168.1.72')
+    app.run(debug=True)
