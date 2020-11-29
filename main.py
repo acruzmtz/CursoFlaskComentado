@@ -27,9 +27,7 @@ def home():
 @app.route('/hello', methods=['GET'])
 @login_required
 def hello():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-
+    
     user_ip = session.get('user_ip')
     username = current_user.id
 
@@ -38,10 +36,6 @@ def hello():
         'todos': get_todos(username=username),
         'username': username
     }
-
-    users = get_users()
-    for user in users:
-        print(user.id)
 
     return render_template('hello.html', **context)
 

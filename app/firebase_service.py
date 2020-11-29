@@ -12,6 +12,10 @@ firebase_admin.initialize_app(credential, {
 
 db = firestore.client()
 
+def add_user(user_data):
+    user_ref = db.collection('users').document(user_data.username)
+    user_ref.set({'password': user_data.password})
+
 def get_users():
     return db.collection('users').get()
 
