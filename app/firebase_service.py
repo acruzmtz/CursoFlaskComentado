@@ -24,3 +24,16 @@ def get_user(user_id):
 
 def get_todos(username):
     return db.collection('users').document(username).collection('todos').get()
+
+def add_todo(user_id, description):
+    todos_collection_ref = db.collection('users').document(user_id).collection('todos')
+    todos_collection_ref.add({'description': description, 'done': False})
+
+def delete(user_id, todo_id):
+    todo_ref = db.document('users/{}/todos/{}'.format(user_id, todo_id))
+    todo_ref.delete()
+
+def update_todo(user_id, todo_id, done):
+    todo_done = not bool(done)
+    todo_ref = db.document('users/{}/todos/{}'.format(user_id, todo_id))
+    todo_ref.update({'done': todo_done})

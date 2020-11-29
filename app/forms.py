@@ -3,8 +3,8 @@ from wtforms.fields import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
-    username = StringField('Nombre de usuario: ', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('Username: ', validators=[DataRequired()])
+    password = PasswordField('Password: ', validators=[DataRequired()])
     # confirm_password = PasswordField('Confirma Password', validators=[DataRequired()])
     #
     # if password == confirm_password:
@@ -12,4 +12,17 @@ class LoginForm(FlaskForm):
     # else:
     #     print('no lo son')
 
-    submit = SubmitField('Enviar')
+    submit = SubmitField('send')
+
+
+class TodoForm(FlaskForm):
+    #name = StringField('Task: ', validators=[DataRequired()])
+    description = StringField('Description: ', validators=[DataRequired()])
+    submit = SubmitField('Save')
+
+class DeleteTodoForm(FlaskForm):
+    submit = SubmitField('Delete')
+
+class UpdateTodoForm(FlaskForm):
+    submit = SubmitField('Update')
+
